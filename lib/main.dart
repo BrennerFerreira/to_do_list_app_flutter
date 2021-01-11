@@ -22,24 +22,15 @@ class _MyAppState extends State<MyApp> {
   ///This function recovers the user chosen main color [newMainColor] and
   ///compares it to the standard [mainColor] for the app (blue). If they are
   ///different, it changes the app [mainColor] to the [newMainColor] the user
-  ///chose and uses setState to update the UI.
-  Future<void> _setMainAppColor() async {
+  ///chose and uses setState to update the UI. The [SplashScreen] will be
+  ///shown until this function returns.
+  Future<Widget> _setMainAppColor() async {
     newMainAppColor = await AppTheme.getMainAppColor();
-    if (newMainAppColor == mainAppColor) {
-      return;
-    } else if (newMainAppColor != mainAppColor) {
+    if (newMainAppColor != mainAppColor) {
       mainAppColor = newMainAppColor;
       setState(() {});
     }
-  }
-
-  /// The best way I have found to get the user preferred color was to use the
-  /// [getMainColor] function within the initState so it updates the color
-  /// when the app starts.
-  @override
-  void initState() {
-    super.initState();
-    _setMainAppColor();
+    return HomeScreen(changeAppColor: _setMainAppColor);
   }
 
   @override
@@ -51,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         primaryColor: mainAppColor,
       ),
       home: AppSplashScreen(
-        afterSplash: HomeScreen(changeAppColor: _setMainAppColor),
+        afterSplash: _setMainAppColor(),
       ),
     );
   }
