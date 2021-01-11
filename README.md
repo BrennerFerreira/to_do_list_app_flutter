@@ -4,6 +4,8 @@ This is the first app I develop. It is meant to be simple yet useful for the use
 
 As stated before, this app is meant to be simple, so I chose not to use any external package or plugin for state management. Everything is done with stateful widgets and setState. I chose this to really grasp the basic concepts before diving in more complex state management options.
 
+This app uses two main external packages: sqflite (1.3.2+1) and shared_preferences (0.5.12+4). They are used to manage stored tasks and user settings.
+
 ## Features
 
 The app has two screens:
