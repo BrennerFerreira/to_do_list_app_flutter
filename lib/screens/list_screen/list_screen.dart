@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:to_do_list/models/task.dart';
 import 'package:to_do_list/screens/widgets/insert_edit_task.dart';
-import 'package:to_do_list/theme/app_theme.dart';
+import 'package:to_do_list/settings/app_settings.dart';
 
 enum MenuEntries { deleteAll }
 
@@ -32,12 +32,12 @@ class _ListScreenState extends State<ListScreen> {
   bool deleteAllWarning = true;
 
   Future<void> _getDeleteWarning() async {
-    deleteWarning = await AppTheme.getDeleteWarning();
+    deleteWarning = await AppSettings.getDeleteWarning();
     setState(() {});
   }
 
   Future<void> _getDeleteAllWarning() async {
-    deleteAllWarning = await AppTheme.getDeleteAllWarning();
+    deleteAllWarning = await AppSettings.getDeleteAllWarning();
     setState(() {});
   }
 

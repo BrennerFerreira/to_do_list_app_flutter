@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:to_do_list/screens/widgets/color_picker_dialog.dart';
-import 'package:to_do_list/theme/app_theme.dart';
+import 'package:to_do_list/settings/app_settings.dart';
 
 ///At the moment, the settings controls three parameters: the app main color,
 ///whether to show the delete task alert or not and whether to show the delete
@@ -19,14 +19,15 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool deleteWarning = true;
   bool deleteAllWarning = true;
+  String theme = 'automatic';
 
   Future<void> _getDeleteWarning() async {
-    deleteWarning = await AppTheme.getDeleteWarning();
+    deleteWarning = await AppSettings.getDeleteWarning();
     setState(() {});
   }
 
   Future<void> _getDeleteAllWarning() async {
-    deleteAllWarning = await AppTheme.getDeleteAllWarning();
+    deleteAllWarning = await AppSettings.getDeleteAllWarning();
     setState(() {});
   }
 
@@ -88,7 +89,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       );
                       if (selectedColor != null) {
                         setState(() {
-                          AppTheme.setMainAppColor(selectedColor);
+                          AppSettings.setMainAppColor(selectedColor);
                           widget.changeAppColor();
                         });
                       }
@@ -109,7 +110,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SwitchListTile.adaptive(
                 value: deleteWarning,
                 onChanged: (newValue) async {
-                  await AppTheme.setDeleteWarning(newValue: newValue);
+                  await AppSettings.setDeleteWarning(newValue: newValue);
                   setState(() {
                     deleteWarning = newValue;
                   });
@@ -129,7 +130,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SwitchListTile.adaptive(
                 value: deleteAllWarning,
                 onChanged: (newValue) async {
-                  await AppTheme.setDeleteAllWarning(newValue: newValue);
+                  await AppSettings.setDeleteAllWarning(newValue: newValue);
                   setState(() {
                     deleteAllWarning = newValue;
                   });
@@ -145,6 +146,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   style: TextStyle(fontSize: 16),
                 ),
               ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Tema:"),
+                  DropdownButton<String>(
+                    onChanged: (newValue) {
+                      setState(() {
+                        theme = newValue;
+                      });
+                    },
+                    value: theme,
+                    items: const [
+                      DropdownMenuItem<String>(
+                        value: "automatic",
+                        child: Text("Automático"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "light",
+                        child: Text("Claro"),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: "dark",
+                        child: Text("Escuro"),
+                      ),
+                    ],
+                  ),
+                ],
+              )
             ],
           ),
         ),

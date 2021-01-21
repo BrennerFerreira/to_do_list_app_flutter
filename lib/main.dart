@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/screens/home_screen/home_screen.dart';
 import 'package:to_do_list/screens/splash_screen/splash_screen.dart';
-import 'package:to_do_list/theme/app_theme.dart';
+import 'package:to_do_list/settings/app_settings.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   ///chose and uses setState to update the UI. The [SplashScreen] will be
   ///shown until this function returns.
   Future<Widget> _setMainAppColor() async {
-    newMainAppColor = await AppTheme.getMainAppColor();
+    newMainAppColor = await AppSettings.getMainAppColor();
     if (newMainAppColor != mainAppColor) {
       mainAppColor = newMainAppColor;
       setState(() {});
@@ -40,6 +40,11 @@ class _MyAppState extends State<MyApp> {
       title: 'To Do List App',
       theme: ThemeData(
         primaryColor: mainAppColor,
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        primaryColor: mainAppColor,
+        brightness: Brightness.dark,
       ),
       home: AppSplashScreen(
         afterSplash: _setMainAppColor(),

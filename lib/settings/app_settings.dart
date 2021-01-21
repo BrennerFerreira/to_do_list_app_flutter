@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 ///Uses [SharedPreferences] plugin to save and read user chosen settings.
 ///It handles primary color and alert preferences changes.
-class AppTheme {
+class AppSettings {
   ///Retrieves the primary color saved. If the user did not make any changes
   ///yet, the primary color will be blue.
   static Future<Color> getMainAppColor() async {
@@ -20,6 +20,21 @@ class AppTheme {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final int newColorValue = newColor.value;
     await prefs.setInt('mainColor', newColorValue);
+  }
+
+  ///Retrieves the app theme saved. If the user did not make any changes
+  ///yet, the app theme will be their system's theme.
+  static Future<String> getAppTheme() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String appTheme = prefs.getString('appTheme') ?? 'automatic';
+    return appTheme;
+  }
+
+  ///When the user changes their preferences, this fucntion receives the chosen
+  ///[newTheme] and saves it in their device.
+  static Future<void> setAppTheme(String newTheme) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('appTheme', newTheme);
   }
 
   ///Retrieves the user preference to show or not a warning when deleting a single
