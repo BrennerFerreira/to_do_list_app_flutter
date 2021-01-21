@@ -18,19 +18,39 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Color newMainAppColor;
   Color mainAppColor = Colors.blue;
+  ThemeMode newAppTheme;
+  ThemeMode appTheme = ThemeMode.system;
 
   ///This function recovers the user chosen main color [newMainColor] and
   ///compares it to the standard [mainColor] for the app (blue). If they are
   ///different, it changes the app [mainColor] to the [newMainColor] the user
   ///chose and uses setState to update the UI. The [SplashScreen] will be
   ///shown until this function returns.
-  Future<Widget> _setMainAppColor() async {
+  Future<Widget> _setMainAppTheme() async {
     newMainAppColor = await AppSettings.getMainAppColor();
+
+    final String theme = await AppSettings.getAppTheme();
+    switch (theme) {
+      case 'light':
+        newAppTheme = ThemeMode.light;
+        break;
+      case 'dark':
+        newAppTheme = ThemeMode.dark;
+        break;
+      case 'automatic':
+      default:
+        newAppTheme = ThemeMode.system;
+    }
     if (newMainAppColor != mainAppColor) {
       mainAppColor = newMainAppColor;
-      setState(() {});
     }
-    return HomeScreen(changeAppColor: _setMainAppColor);
+    if (newAppTheme != appTheme) {
+      appTheme = newAppTheme;
+    }
+
+    setState(() {});
+
+    return HomeScreen(changeAppTheme: _setMainAppTheme);
   }
 
   @override
@@ -46,8 +66,9 @@ class _MyAppState extends State<MyApp> {
         primaryColor: mainAppColor,
         brightness: Brightness.dark,
       ),
+      themeMode: appTheme,
       home: AppSplashScreen(
-        afterSplash: _setMainAppColor(),
+        afterSplash: _setMainAppTheme(),
       ),
     );
   }

@@ -10,9 +10,9 @@ import 'package:to_do_list/screens/settings_screen/settings_screen.dart';
 ///not to use a state management package, this was the easiest way
 ///I have found to pass the argument through the app.
 class HomeScreen extends StatefulWidget {
-  final Future<void> Function() changeAppColor;
+  final Future<void> Function() changeAppTheme;
 
-  const HomeScreen({Key key, this.changeAppColor}) : super(key: key);
+  const HomeScreen({Key key, this.changeAppTheme}) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             deleteTask: helper.deleteTask,
             deleteAllDoneFn: helper.deleteAllDoneTasks,
           ),
-          SettingsScreen(changeAppColor: widget.changeAppColor),
+          SettingsScreen(changeAppTheme: widget.changeAppTheme),
         ],
       ),
       floatingActionButton: FloatingActionButton(

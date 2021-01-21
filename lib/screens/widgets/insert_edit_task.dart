@@ -128,11 +128,20 @@ class _InsertEditTaskState extends State<InsertEditTask> {
             TextFormField(
               controller: titleController,
               autofocus: true,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: "Tarefa",
+                labelStyle: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
                 hintText: "Digite sua tarefa...",
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
               ),
               textCapitalization: TextCapitalization.sentences,
+              cursorColor: Theme.of(context).primaryColor,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Por favor, preencha o campo acima.";
@@ -153,6 +162,10 @@ class _InsertEditTaskState extends State<InsertEditTask> {
                       color: taskColor,
                     ),
                     OutlineButton(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      textColor: Theme.of(context).primaryColor,
                       onPressed: () async {
                         final Color selectedColor = await showDialog<Color>(
                           context: context,

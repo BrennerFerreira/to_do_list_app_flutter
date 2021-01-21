@@ -8,9 +8,9 @@ import 'package:to_do_list/settings/app_settings.dart';
 ///all tasks alert or not. There are plans to update this screen with more
 ///functionalities, specially one to change the app language.
 class SettingsScreen extends StatefulWidget {
-  final Future<void> Function() changeAppColor;
+  final Future<void> Function() changeAppTheme;
   const SettingsScreen({
-    this.changeAppColor,
+    this.changeAppTheme,
   });
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -90,7 +90,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       if (selectedColor != null) {
                         setState(() {
                           AppSettings.setMainAppColor(selectedColor);
-                          widget.changeAppColor();
+                          widget.changeAppTheme();
                         });
                       }
                     },
@@ -154,6 +154,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   DropdownButton<String>(
                     onChanged: (newValue) {
                       setState(() {
+                        AppSettings.setAppTheme(newValue);
                         theme = newValue;
                       });
                     },

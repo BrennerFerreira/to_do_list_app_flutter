@@ -23,6 +23,7 @@ class AppSplashScreen extends StatelessWidget {
         image: Svg("assets/images/check-list2.svg"),
       ),
       photoSize: 100,
+      backgroundColor: Colors.grey,
     );
   }
 }
