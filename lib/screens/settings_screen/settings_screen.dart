@@ -19,7 +19,12 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool deleteWarning = true;
   bool deleteAllWarning = true;
-  String theme = 'automatic';
+  String theme;
+
+  Future<void> _getTheme() async {
+    theme = await AppSettings.getAppTheme() ?? 'automatic';
+    setState(() {});
+  }
 
   Future<void> _getDeleteWarning() async {
     deleteWarning = await AppSettings.getDeleteWarning();
@@ -38,6 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     _getDeleteWarning();
     _getDeleteAllWarning();
+    _getTheme();
   }
 
   @override
@@ -159,6 +165,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       });
                     },
                     value: theme,
+                    hint: const Text("Carregando tema..."),
                     items: const [
                       DropdownMenuItem<String>(
                         value: "automatic",
